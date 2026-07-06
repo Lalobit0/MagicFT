@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "engine:demo": "node --loader tsx scripts/engine-demo.ts"
+    "engine:demo": "tsx scripts/engine-demo.ts",
+    "api:test": "tsx scripts/test-api.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",
