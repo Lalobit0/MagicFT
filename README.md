@@ -24,6 +24,11 @@ mock mientras `USE_MOCK=true`):
   para Claude) — `src/lib/ai/`
 - ✅ **UI**: inicio con ranking de picks, partidos de hoy/próximos, detalle de
   partido con análisis completo, planes — `src/app/`, `src/components/`
+- ✅ **Modelo de suscripción funcional**: límite del plan gratis (3 análisis/día),
+  paywall y gating de funciones Premium (momios/valor, ranking) —
+  `src/lib/plan/`, `src/lib/usage/` (demo por cookie; listo para Supabase Auth + Stripe)
+- ✅ **Conector de API-Football con caché** y fallback automático a mock —
+  `src/lib/data/` (la caché mantiene barato el plan aunque haya muchos usuarios)
 - ✅ **Esquema de base de datos** (Postgres/Supabase) — `supabase/schema.sql`
 - ✅ **Filtro de lenguaje irresponsable** (frases prohibidas) y disclaimers
 

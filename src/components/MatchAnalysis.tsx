@@ -1,6 +1,7 @@
 import type { Fixture } from "@/lib/data/matches";
 import { predict } from "@/lib/engine/predict";
 import { ConfidenceBadge, RiskBadge } from "./badges";
+import { PremiumLock } from "./Paywall";
 import { ProbabilityBar } from "./ProbabilityBar";
 
 const TAG_STYLE: Record<string, string> = {
@@ -9,7 +10,14 @@ const TAG_STYLE: Record<string, string> = {
   agresivo: "bg-orange-500/15 text-orange-300",
 };
 
-export function MatchAnalysis({ fixture }: { fixture: Fixture }) {
+export function MatchAnalysis({
+  fixture,
+  showValue = true,
+}: {
+  fixture: Fixture;
+  /** Si es false, la comparación con momios/valor se muestra bloqueada (Premium). */
+  showValue?: boolean;
+}) {
   const p = predict(fixture.input);
   const { home, away, odds } = fixture.input;
 
@@ -126,8 +134,9 @@ export function MatchAnalysis({ fixture }: { fixture: Fixture }) {
         </div>
       </div>
 
-      {/* Comparación probabilidad vs momios (valor) */}
-      {odds && (
+      {/* Comparación probabilidad vs momios (valor) — función Premium */}
+      {odds && !showValue && <PremiumLock title="Probabilidad estimada vs. momios" />}
+      {odds && showValue && (
         <div className="card">
           <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-accent">
             Probabilidad estimada vs. momios
