@@ -1,6 +1,6 @@
 import { MatchCard } from "@/components/MatchCard";
 import { QuotaBanner } from "@/components/QuotaBanner";
-import { getTodayMatches, getUpcomingMatches, getAllMatches } from "@/lib/data/matches";
+import { getTodayMatches, getUpcomingMatches, getAllMatches, isMockMode } from "@/lib/data/matches";
 import { predict } from "@/lib/engine/predict";
 import { getPlan } from "@/lib/plan/plans";
 import { getCurrentUser } from "@/lib/user";
@@ -19,6 +19,7 @@ export default async function HomePage() {
   const { uid, plan } = getCurrentUser();
   const quota = getQuota(uid, plan);
   const canSeeRanking = getPlan(plan).features.ranking;
+  const mock = isMockMode();
 
   // Ranking de picks más confiables (excluye los no recomendables).
   const ranking = all
@@ -38,6 +39,23 @@ export default async function HomePage() {
           Sin promesas mágicas: análisis claro para tomar mejores decisiones.
         </p>
       </section>
+
+      <div
+        className={`rounded-xl border px-4 py-2.5 text-xs ${
+          mock
+            ? "border-pitch-700/60 bg-pitch-800/40 text-pitch-100/60"
+            : "border-teal-500/30 bg-teal-500/10 text-teal-200/90"
+        }`}
+      >
+        {mock ? (
+          <>🧪 Mostrando <b>datos de ejemplo</b>. Conecta tu llave de API-Football para datos reales.</>
+        ) : (
+          <>
+            📡 <b>Datos reales</b> de Liga MX (temporada 2024, plan gratis de API-Football). Para
+            partidos <b>en vivo/actuales</b> se requiere un plan de pago.
+          </>
+        )}
+      </div>
 
       <QuotaBanner plan={plan} quota={quota} />
 
